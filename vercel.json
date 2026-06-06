@@ -1,0 +1,6 @@
+{
+  "outputDirectory": "drift-city",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
