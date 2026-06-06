@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>DRIFT CITY</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="game-wrap">
+  <canvas id="game"></canvas>
+
+  <!-- UI Overlay -->
+  <div id="ui">
+
+    <!-- TOP LEFT: Speed -->
+    <div id="hud-tl">
+      <div class="hud-spd" id="spd">0</div>
+      <div class="hud-unit">KM/H</div>
+      <div class="hud-car" id="carname">BMW M3</div>
+    </div>
+
+    <!-- TOP CENTER: Gear + RPM -->
+    <div id="hud-tc">
+      <div style="text-align:center;">
+        <div class="gear-label">GEAR</div>
+        <div class="gear-num" id="gear-num">1</div>
+      </div>
+      <div class="gear-sep"></div>
+      <div id="rpm-col">
+        <div class="rpm-label">RPM</div>
+        <div id="rpm-track"><div id="rpm-fill"></div></div>
+        <div class="rpm-label" id="rpm-val">0</div>
+      </div>
+    </div>
+
+    <!-- TOP RIGHT: Score -->
+    <div id="hud-tr">
+      <div class="hud-score-lbl">SCORE</div>
+      <div class="hud-score-val" id="score-val">0</div>
+      <div class="hud-combo" id="combo-val"></div>
+    </div>
+
+    <!-- MINIMAP -->
+    <div id="mm-wrap">
+      <div class="mm-title">MAP</div>
+      <canvas id="minimap" width="140" height="114"></canvas>
+    </div>
+
+    <!-- NITRO BAR -->
+    <div id="nitro-bar-wrap">
+      <div class="nitro-label">⚡ NOS</div>
+      <div id="nitro-track"><div id="nitro-fill"></div></div>
+      <div class="nitro-pct" id="nitro-pct">100%</div>
+    </div>
+
+    <!-- DRIFT LABEL -->
+    <div id="drift-label">DRIFT!</div>
+
+    <!-- SCORE POPUP -->
+    <div id="score-popup"></div>
+
+    <!-- OPTIONS BUTTON -->
+    <button id="opts-btn">⚙</button>
+
+    <!-- OPTIONS PANEL -->
+    <div id="opts-panel">
+      <h2>OPTIONS</h2>
+      <div class="opt-row">
+        <label>STEERING</label>
+        <div class="seg">
+          <div class="seg-b on" data-g="steer" data-v="wheel">WHEEL</div>
+          <div class="seg-b" data-g="steer" data-v="btns">BUTTONS</div>
+        </div>
+      </div>
+      <div class="opt-row">
+        <label>GEARBOX</label>
+        <div class="seg">
+          <div class="seg-b on" data-g="gbox" data-v="manual">MANUAL</div>
+          <div class="seg-b" data-g="gbox" data-v="auto">AUTO</div>
+        </div>
+      </div>
+      <button id="opts-close">DONE</button>
+    </div>
+
+    <!-- CONTROLS -->
+    <div id="controls">
+      <!-- LEFT: Steering -->
+      <div id="left-ctrl">
+        <div id="sw-outer" style="display:flex;">
+          <div id="sw-hub"></div>
+          <div class="sw-mark"></div>
+        </div>
+        <div id="btn-steer">
+          <div class="steer-btn" id="btn-left">◀</div>
+          <div class="steer-btn" id="btn-right">▶</div>
+        </div>
+      </div>
+
+      <!-- CENTER: Gear Shifter -->
+      <div id="center-ctrl">
+        <div id="gear-shifter">
+          <div class="gs-btn" id="gs-up">▲</div>
+          <div class="gs-dot"></div>
+          <div class="gs-btn" id="gs-dn">▼</div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Pedals -->
+      <div id="right-ctrl">
+        <div class="pedal-col">
+          <div class="pedal-lbl">H-BRAKE</div>
+          <div class="pedal-btn" id="btn-hbrake">HAND<br>BRAKE</div>
+          <div class="pedal-lbl" style="margin-top:6px;">NITRO</div>
+          <div class="pedal-btn" id="btn-nitro">⚡ NOS</div>
+        </div>
+        <div class="pedal-col">
+          <div class="pedal-lbl">BRAKE</div>
+          <div class="pedal-btn" id="btn-brake">BRAKE</div>
+        </div>
+        <div class="pedal-col">
+          <div class="pedal-lbl">GAS</div>
+          <div class="pedal-btn" id="btn-gas">GAS</div>
+        </div>
+      </div>
+    </div><!-- /controls -->
+
+  </div><!-- /ui -->
+</div><!-- /game-wrap -->
+
+<!-- CAR SELECT SCREEN -->
+<div id="car-select">
+  <div id="cs-bg"></div>
+  <div id="cs-content">
+    <div id="cs-left">
+      <div id="cs-logo">
+        <div class="logo-main">DRIFT</div>
+        <div class="logo-sub">CITY</div>
+      </div>
+      <p class="cs-tagline">OPEN WORLD · PIXEL DRIFT</p>
+      <div class="cs-keys">
+        <div class="cs-key-row"><span class="key">WASD</span><span>/ ARROWS — Drive</span></div>
+        <div class="cs-key-row"><span class="key">SPACE</span><span>— Handbrake</span></div>
+        <div class="cs-key-row"><span class="key">SHIFT</span><span>— Nitro</span></div>
+        <div class="cs-key-row"><span class="key">E / Q</span><span>— Gear Up / Down</span></div>
+      </div>
+      <button id="start-btn">▶ START RACE</button>
+    </div>
+    <div id="cs-right">
+      <div class="car-list" id="car-list"></div>
+    </div>
+  </div>
+</div>
+
+<script src="game.js"></script>
+</body>
+</html>
